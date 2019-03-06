@@ -35,6 +35,35 @@ Online offers for individual sizes of panes you get at Ebay. A 2mm thick pane is
 
 ## Hardware
 
+### Display
+
+![Display](/hardware/display.jpg)
+
+This is a LED matrix display which has in total 512 (32x16) RGB LEDs. If you want to learn more about the internal electronic details of such a display, please visit this page: https://bikerglen.com/projects/lighting/led-panel-1up/#The_LED_Panel. The setup and cabling for usage with the PxMatrix driver you should visit the page: https://github.com/2dom/PxMatrix/blob/master/README.md and https://learn.adafruit.com/32x16-32x32-rgb-led-matrix/new-wiring. For powering please visit this page: https://learn.adafruit.com/32x16-32x32-rgb-led-matrix/powering. 
+
+![Display](/hardware/display_pcb.jpg)
+
+### NodeMcu ESP8266-12E
+
+I decided to take this microcontroller board because of its power, easy programming, WIFI and small form factor. Following GPIOs are used:
+
+  Signal    | ESP8266 | NodeMcu
+  ----------|---------|--------
+  MOSI (R0) | GPIO13  | D7
+  A         | GPIO5   | D1
+  B         | GPIO4   | D2
+  C         | GPIO15  | D8
+  CLK       | GPIO14  | D5
+  OE        | GPIO2   | D4
+  STB       | GPIO16  | D0
+  PIR       | GPIO12  | D6
+  BUTTON    | GPIO0   | D3
+  GND       | GND     | GND
+  
+This module can be obtained at Ebay for about 3€.  
+  
+![NodeMcu](/hardware/NodeMcu_ESP8266_12E.png)  
+
 ## Software
 
 ## Photos
