@@ -39,7 +39,7 @@ Online offers for individual sizes of panes you get at Ebay. A 2mm thick pane is
 
 ![Display](/hardware/display.jpg)
 
-This is a LED matrix display which has in total 512 (32x16) RGB LEDs. If you want to learn more about the internal electronic details of such a display, please visit this page: https://bikerglen.com/projects/lighting/led-panel-1up/#The_LED_Panel. The setup and cabling for usage with the PxMatrix driver you should visit the page: https://github.com/2dom/PxMatrix/blob/master/README.md and https://learn.adafruit.com/32x16-32x32-rgb-led-matrix/new-wiring. For powering please visit this page: https://learn.adafruit.com/32x16-32x32-rgb-led-matrix/powering. 
+This is a LED matrix display which has in total 512 (32x16) RGB LEDs. If you want to learn more about the internal electronic details of such a display, please visit this page: https://bikerglen.com/projects/lighting/led-panel-1up/#The_LED_Panel. The setup and cabling for usage with the PxMatrix driver you should visit the page: https://github.com/2dom/PxMatrix/blob/master/README.md and https://learn.adafruit.com/32x16-32x32-rgb-led-matrix/new-wiring. For powering please visit this page: https://learn.adafruit.com/32x16-32x32-rgb-led-matrix/powering. The main power supply for the display should deliver at least a current of 2A. I had to power the display with about 4.3 Volt, maybe because the logic of display does not detect High-levels (3.3 Volt) from the ESP8266 correctly when powered with 5 Volt.
 
 ![Display](/hardware/display_pcb.jpg)
 
@@ -63,6 +63,12 @@ I decided to take this microcontroller board because of its power, easy programm
 This module can be obtained at Ebay for about 3€.  
   
 ![NodeMcu](/hardware/NodeMcu_ESP8266_12E.png)  
+
+### PIR sensor
+
+![NodeMcu](/hardware/hc_sr505.jpg) 
+
+The PIR sensor is used to switch off the display after some configurable time (default 10 min), when no motion is detected. This is mainly for extending the lifetime of the display LEDs. I have choosen the embedded PIR sensor HC-SR505, which is one of the smallest and cheapest. I had to add a suppression choke to filter high frequency signals like WIFI from he power lines, otherwise I got false positives and the display never turned off. The sensing distance for me is also very poor (only 2m) and not 3m as in the datasheet. All in all I have deaktivated the "display switching off" in mean time (DISPLAY_ON_PERMANENTLY), until the problem with the distance is solved. 2 ways to solve: 1. increasing the amplifying factor of the HC-SR505 OPAMP or 2. using the radar sensor [RWCL-0516](/hardware/rwcl_0516.jpg). I tend to solution 2 but no idea of the permanent microwave emission influencing the healt.
 
 ## Software
 
