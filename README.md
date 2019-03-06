@@ -16,8 +16,22 @@ After my old 7-segmented clock in the living room gave up, I decided to build my
 * all individual settings like timezone (incl. daylight saving and nornal time), OpenWeatherMap API key, OpenWeatherMap API city, OpenWeatherMap API units, NTP server address and motion detection hold time shall be configurable with a WEB server providing a settings page.
 * a PIR (Pyroelectric Infrared Sensor) shall turn on the display when motion is detected and turn off the display again after a configurable time
 
-
 ## Mechanics
+
+The different layers
+![Layers](/mechanics/grid_foil_glas.jpg)
+
+### Dividing grid
+
+You need a dividing grid in order to prevent neighbour pixels from blending colors. Without a dividing grid, there will be no sharp edges between two pixels, but a gradient, making the resulting image look blurry. The grid I designed is for a LED matrix display 32x16 RGB P6, means for 6mm led raster. The STL-file (an abbreviation of "stereolithography") created with FreeCad can be downloaded [here](/mechanics/grid.stl). The STL-file can be sent to any online 3D-Print service.
+
+### Diffuser
+
+It is very important to take the thinnest foil but with the most diffused effect at the same time. Don't take diffused acrylic glas, this is too thick and too blury. Plastic sheets from crafting suppliers are also most times too blury. Good results you get with adhesive foils for windows for privacy. I ordered my foils at [Velken](www.velken.de) (item no. 213010 or 213001). Glue instructions from Velken are included.
+
+### Glas pane
+
+Online offers for individual sizes of panes you get at Ebay. A 2mm thick pane is enough. The diffuser foil is glued onto the glas pane. 
 
 ## Hardware
 
