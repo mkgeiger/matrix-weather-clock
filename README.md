@@ -13,7 +13,7 @@ After my old 7-segmented clock in the living room gave up, I decided to build my
 * displaying the actual weather icon and 2 weather forecast icons in the menu row, or alternativly the humidity or the air pressure
 * changing the menu by pressing the push button shall have a retro scrolling effect
 * the OpenWeatherMap API shall be used for requesting all weather information (I know its sometimes less accurate then commmercial ones, but its free!)
-* all individual settings like timezone (incl. daylight saving and nornal time), OpenWeatherMap API key, OpenWeatherMap API city, OpenWeatherMap API units, NTP server address and motion detection hold time shall be configurable with a WEB server providing a settings page.
+* all individual settings like time zone (incl. daylight saving and nornal time), OpenWeatherMap API key, OpenWeatherMap API city, OpenWeatherMap API units, NTP server address and motion detection hold time shall be configurable with a WEB server providing a settings page.
 * a PIR (Pyroelectric Infrared Sensor) shall turn on the display when motion is detected and turn off the display again after a configurable time
 
 ## Mechanics
@@ -71,6 +71,50 @@ This module can be obtained at Ebay for about 3€.
 The PIR sensor is used to switch off the display after some configurable time (default 10 min), when no motion is detected. This is mainly for extending the lifetime of the display LEDs. I have choosen the embedded PIR sensor HC-SR505, which is one of the smallest and cheapest. I had to add a suppression choke to filter high frequency signals like WIFI from he power lines, otherwise I got false positives and the display never turned off. The sensing distance for me is also very poor (only 2m) and not 3m as in the datasheet. All in all I have deaktivated the "display switching off" in mean time (DISPLAY_ON_PERMANENTLY), until the problem with the distance is solved. 2 ways to solve: 1. increasing the amplifying factor of the HC-SR505 OPAMP or 2. using the radar sensor [RWCL-0516](/hardware/rwcl_0516.jpg). I tend to solution 2 but no idea of the permanent microwave emission influencing the healt.
 
 ## Software
+
+### Preparations
+
+First install the [Arduino IDE](https://www.arduino.cc/en/main/software). Under board administration install support for "NodeMCU 1.0 (ESP-12E Module)". The CPU frequency has to be configured for "160 MHz". Following libraries have to be installed:
+
+* PxMatrix
+* Time
+* Timezone
+* ArduinoJson
+* WiFi
+* WiFiManager
+* DNSServer
+* ESP8266WebServer
+* ESP8266HTTPClient
+
+### NTP client
+
+The NTP client adjusts the internal clock every 10 minutes. The timestamp (UTC Unix time) is converted to the local timezone considering the standard or daylight saving time. An individual NTP server (default: de.pool.ntp.org) can be configured over the WEB interface.
+
+### Time Zone
+
+![Timezone](/photos/timezone.png)
+
+The time zone can be configured over the WEB interface. If the daylight saving time is not applicable to your time zone set both standard and dylight saving times the same values.
+
+### OpenWeatherMap API
+
+* first request an account at [OpenWeatherMap](https://home.openweathermap.org/users/sign_up) to obtain an individual API key.
+* test following URLs in your browser and fill in your city and API key: [query1](http://api.openweathermap.org/data/2.5/weather?q=<city>&appid=<apikey>&units=metric) and [query2](http://api.openweathermap.org/data/2.5/forecast?q=<city>&appid=<apikey>&units=metric&cnt=2)
+* when you get back the weather information in JSON format, everything is ok. You can now enter the API key, city and unit in the WEB interface.
+
+The weather condition codes (more detailed than the weather icons) are determined from the JSON response and the corresponding icons (which are designed by myself especially for a matrix display) are displayed. Most icons exist for day and night. A binary search is applied to the icon array when selecting one icon. 
+
+### Motion detection
+
+The status of the PIR sensor is read cyclic. Immediately when a motion is detected the display shows all graphics. The hold time (when no motion is detected anymore) until the display is drawn completely black can be configured in the WEB interface (default: 10 min). Because the range is very poor an alternative would be to use a short range radar for motion detection. Until this is not completely clarified the timeout of the hold time is disabled in the source code to leave the display permanently on.
+
+### HTTP server
+
+The WEB interface is used to store the settings of OpenWeatherMap API, NTP server, time zone and motion detection hold time in the EEPROM. The assigned IP can be found in the router settings. The WIFI settings can be resetted with http:/<IP>/resetWifi. An access point is started with the next reset (SSID: matrix_weather_clock IP: 192.168.1.1) and new WIFI settings can be configured.
+
+### Drawing
+
+The display refresh cycle for the [PxMatrix](https://github.com/2dom/PxMatrix) library is configured to 2 ms. The drawing cycle is configured to 100 ms. Within these 100 ms all graphical elements are drawn. A temporary buffer of 1kbyte (32 columns x 16 rows x 2 bytes color) is used as a double buffer, to which every graphical element can draw in its draw cycle. At the end of the draw cycle the complete buffer is copied to the PxMatrix interface to control the LEDs. At the beginning of each draw cycle the buffer is completely cleared. All graphical text elements can be drawn with an individual color. The 100 ms cycle time has been choosen because of the animation effects like colon blinking, digit- and menue-scrolling. Menue scrolling is triggered by a push button event.
 
 ## Photos
 
