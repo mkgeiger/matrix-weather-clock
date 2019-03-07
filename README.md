@@ -102,7 +102,7 @@ The time zone can be configured over the WEB interface. If the daylight saving t
 * test following URLs in your browser and fill in your city and API key: [query1](http://api.openweathermap.org/data/2.5/weather?q=<city>&appid=<apikey>&units=metric) and [query2](http://api.openweathermap.org/data/2.5/forecast?q=<city>&appid=<apikey>&units=metric&cnt=2)
 * when you get back the weather information in JSON format, everything is ok. You can now enter the API key, city and unit in the WEB interface.
 
-The weather condition codes (more detailed than the weather icons) are determined from the JSON response and the corresponding icons (which are designed by myself especially for a matrix display) are displayed. Most icons exist for day and night. A binary search is applied to the icon array when selecting one icon. 
+The [weather condition codes](/datasheets/IconsOpenWeatherMap.pdf) (more detailed than the weather icons) are determined from the JSON response and the corresponding icons (which are designed by myself especially for a matrix display) are displayed. Most icons exist for day and night. A binary search is applied to the icon array when selecting one icon. 
 
 ### Motion detection
 
