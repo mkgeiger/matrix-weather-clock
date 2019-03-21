@@ -111,7 +111,7 @@ The status of the PIR sensor is read cyclic. Immediately when a motion is detect
 
 ### HTTP server
 
-The WEB interface is used to store the settings of OpenWeatherMap API, NTP server, time zone and motion detection hold time in the EEPROM. The assigned IP can be found in the router settings. The WIFI settings can be resetted with http://<IP>/resetWifi. Due to implemented multicast DNS (mDNS) the WEB interface can also be accessed via http://MatrixWeatherClock.local instead of giving the IP. An access point is started with the next reset (SSID: matrix_weather_clock IP: 192.168.1.1) and new WIFI settings can be configured.
+The WEB interface is used to store the settings of OpenWeatherMap API, NTP server, time zone and motion detection hold time in the EEPROM. The assigned IP can be found in the router settings. The WIFI settings can be resetted with http://IPaddress/resetWifi. Due to implemented multicast DNS (mDNS) the WEB interface can also be accessed via http://MatrixWeatherClock.local instead of giving the IP. When the "Reset WIFI" button was pressed an access point is started with the following reset (SSID: matrix_weather_clock IP: 192.168.1.1) and new WIFI settings can be configured.
 
 ### Android popup notification messages
 
